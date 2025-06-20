@@ -21,34 +21,12 @@ const port = process.env.PORT || 8800;
 
 // ✅ Proper CORS setup
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Allow localhost origins
-    if (origin === "http://localhost:5173" || origin === "http://localhost:3000") {
-      callback(null, true);
-      return;
-    }
-    
-    // In production, allow specific domains
-    if (process.env.NODE_ENV === "production") {
-      // Allow your production website
-      if (origin === "https://tan-aardvark-644850.hostingersite.com") {
-        callback(null, true);
-        return;
-      }
-      
-      // Allow Android app (null origin for Android WebView)
-      if (!origin) {
-        callback(null, true);
-        return;
-      }
-      
-      callback(new Error("Not allowed by CORS"));
-      return;
-    }
-    
-    // For development, allow all origins (but this should be changed in production)
-    callback(null, true);
-  },
+  origin: [
+    "http://localhost:5173", // Vite default
+    "http://localhost:3000", // React default
+    "undefined",
+    "https://tan-aardvark-644850.hostingersite.com"
+  ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 };
